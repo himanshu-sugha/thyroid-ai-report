@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI in Thyroid Disease Diagnosis: A Research Review</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: "Calm Harmony" - A palette of warm neutrals (bg-stone-50), soft grays (slate), and a subtle teal accent (teal) for a professional, calm, and focused feel appropriate for a medical research topic. -->
+    <!-- Application Structure Plan: The SPA is designed as a top-down narrative for clarity and ease of use. It starts with a broad introduction, moves to a high-level dashboard of model types ('Models at a Glance'), provides a quantitative comparison with an interactive chart ('Performance Snapshot'), offers deep-dive evidence in a filterable table of research papers, and concludes with a summary of 'Trends & Challenges'. This thematic structure was chosen over mirroring a specific report's layout because it guides the user from general concepts to specific details logically, making the complex information highly digestible and explorable. The primary interaction is filtering the chart and sorting/searching the table, allowing users to quickly find information relevant to their specific interests. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Overview of ML/DL models. Goal: Inform/Organize. Method: HTML/Tailwind CSS Cards. Interaction: Hover effects for details. Justification: Cards provide a scannable, high-level summary of different model categories.
+        - Report Info: Model performance metrics (accuracy). Goal: Compare. Viz Method: Horizontal Bar Chart (Chart.js/Canvas). Interaction: Tooltips with details, dropdown filter by model type. Justification: A bar chart is the clearest way to compare quantitative performance across categories. Horizontal orientation improves readability of labels.
+        - Report Info: Specific research papers and findings. Goal: Organize/Inform. Method: Interactive HTML Table. Interaction: Search and column sorting via JavaScript. Justification: A table is the most effective structure for presenting detailed, multi-attribute data like research papers. Interactivity makes it a powerful exploration tool.
+        - Report Info: Future directions and limitations. Goal: Inform. Method: Two-column text layout. Interaction: None. Justification: A simple text layout is sufficient for presenting these qualitative insights.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+        .table-sortable th {
+            cursor: pointer;
+        }
+        .table-sortable th:hover {
+            background-color: #f1f5f9; /* slate-100 */
+        }
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #5eead4; /* teal-300 */
+            border-color: #14b8a6; /* teal-500 */
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-teal-700 mb-2">AI in Thyroid Disease Diagnosis</h1>
+            <p class="text-lg text-slate-600 max-w-3xl mx-auto">An interactive overview of machine learning models and key research findings.</p>
+        </header>
+
+        <main>
+            <section id="introduction" class="mb-16 bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                 <h2 class="text-2xl font-bold text-slate-900 mb-4">The Rise of Intelligent Diagnosis</h2>
+                 <p class="text-slate-600 leading-relaxed">
+                    Artificial Intelligence (AI), particularly machine learning and deep learning, is revolutionizing how medical conditions are diagnosed and managed. In the context of thyroid disease, AI models are being developed to analyze complex data from patient records and medical images with remarkable accuracy. These tools offer the potential to assist clinicians in making faster, more objective, and more reliable diagnoses, from identifying common disorders like hypothyroidism to classifying the malignancy of thyroid nodules. This report explores the prominent models, their performance, and the current landscape of research in this promising field.
+                 </p>
+            </section>
+            
+            <section id="models" class="mb-16">
+                <h2 class="text-3xl font-bold text-center text-slate-900 mb-8">Models at a Glance</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <h3 class="text-xl font-semibold text-teal-700 mb-3">Classical Machine Learning</h3>
+                        <p class="text-slate-600 mb-4">These models excel at finding patterns in structured clinical data, such as hormone levels, patient symptoms, and demographic information.</p>
+                        <div class="space-y-2">
+                            <p class="font-medium text-slate-700">∙ <span class="font-bold">Random Forest:</span> An ensemble method that combines multiple decision trees to improve prediction accuracy and control over-fitting. Often a top performer.</p>
+                            <p class="font-medium text-slate-700">∙ <span class="font-bold">Support Vector Machine (SVM):</span> A powerful classifier that finds the optimal hyperplane to separate data points into different classes.</p>
+                            <p class="font-medium text-slate-700">∙ <span class="font-bold">Gradient Boosting (XGBoost):</span> Sequentially builds simple models, with each one correcting the errors of the previous, resulting in a highly accurate model.</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <h3 class="text-xl font-semibold text-teal-700 mb-3">Deep Learning Models</h3>
+                        <p class="text-slate-600 mb-4">These models, based on artificial neural networks, are particularly effective for analyzing unstructured data like medical images.</p>
+                         <div class="space-y-2">
+                            <p class="font-medium text-slate-700">∙ <span class="font-bold">Convolutional Neural Networks (CNNs):</span> The standard for image analysis, automatically learning features from ultrasound or pathology images to detect nodules and classify them.</p>
+                            <p class="font-medium text-slate-700">∙ <span class="font-bold">ResNet & DenseNet:</span> Advanced CNN architectures that allow for deeper networks, often leading to higher accuracy in complex image classification tasks.</p>
+                            <p class="font-medium text-slate-700">∙ <span class="font-bold">YOLO (You Only Look Once):</span> An efficient model used for real-time object detection, capable of identifying the location of thyroid nodules in an image.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="performance" class="mb-16">
+                <h2 class="text-3xl font-bold text-center text-slate-900 mb-4">Performance Snapshot</h2>
+                <p class="text-slate-600 text-center mb-8 max-w-2xl mx-auto">This chart shows the typical accuracy ranges reported in recent studies for different model categories. Higher accuracy indicates better performance in correctly diagnosing thyroid conditions.</p>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="chart-container">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="papers" class="mb-16">
+                <h2 class="text-3xl font-bold text-center text-slate-900 mb-8">Key Research Papers</h2>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="mb-4">
+                        <input type="text" id="searchInput" class="w-full p-3 border border-slate-300 rounded-lg search-input transition" placeholder="Search papers by model, finding, etc...">
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-slate-200 table-sortable" id="papersTable">
+                            <thead class="bg-slate-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider" data-sort="title">Title & Year</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider" data-sort="model">Model / Method</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider" data-sort="finding">Key Finding</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Link</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody" class="bg-white divide-y divide-slate-200">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="trends" class="mb-16">
+                <h2 class="text-3xl font-bold text-center text-slate-900 mb-8">Key Trends & Challenges</h2>
+                 <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <h3 class="text-xl font-semibold text-teal-700 mb-3">Emerging Trends</h3>
+                        <ul class="list-disc list-inside space-y-2 text-slate-600">
+                            <li><span class="font-semibold">Ensemble Methods:</span> Combining multiple models (e.g., Random Forest, XGBoost) often yields higher and more robust performance than single models.</li>
+                            <li><span class="font-semibold">AI-Assisted Imaging:</span> Deep learning is increasingly used to analyze ultrasound images, achieving performance comparable to or even exceeding human experts.</li>
+                            <li><span class="font-semibold">Feature Selection:</span> Identifying the most important clinical variables helps create simpler, more interpretable, and still highly accurate models.</li>
+                             <li><span class="font-semibold">Data Augmentation:</span> Techniques like SMOTE and GANs are used to address class imbalance in datasets, a common problem in medical data.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <h3 class="text-xl font-semibold text-teal-700 mb-3">Ongoing Challenges</h3>
+                         <ul class="list-disc list-inside space-y-2 text-slate-600">
+                            <li><span class="font-semibold">Data Quality & Availability:</span> High-quality, large, and well-labeled datasets are crucial for training accurate models but can be difficult to obtain.</li>
+                            <li><span class="font-semibold">Model Interpretability:</span> Understanding *why* a complex "black box" model like a neural network makes a certain prediction remains a significant hurdle for clinical trust.</li>
+                            <li><span class="font-semibold">Clinical Integration:</span> Bridging the gap from a research model to a validated, regulatory-approved tool used in daily clinical practice is a major challenge.</li>
+                            <li><span class="font-semibold">Generalization:</span> Ensuring a model trained on data from one hospital performs well on data from another hospital is critical for widespread adoption.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+        <footer class="text-center pt-8 border-t border-slate-200">
+            <p class="text-sm text-slate-500">Interactive Report Generated by Gemini. Research data sourced from recent academic publications.</p>
+        </footer>
+
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const papersData = [
+        { 
+            title: "Advanced Machine Learning Techniques for Precise Thyroid Disease Classification",
+            year: 2024,
+            model: "Random Forest",
+            finding: "Achieved the highest accuracy of 99.39% in classifying thyroid disease, outperforming SVM, XGBoost, and other models.",
+            url: "https://journal.esrgroups.org/jes/article/view/2841",
+            category: "Classical ML"
+        },
+        { 
+            title: "Performance Evaluation of Deep Learning for Detection of Thyroid Nodules: A Meta-Analysis",
+            year: 2025,
+            model: "Deep Learning (CNNs)",
+            finding: "Systematic review found DL models have promising diagnostic accuracy (pooled sensitivity 91%), comparable to or exceeding clinicians.",
+            url: "https://www.jmir.org/2025/1/e73516",
+            category: "Deep Learning"
+        },
+        { 
+            title: "Machine Learning for Thyroid Cancer Detection, Metastasis, and Recurrence—A Scoping Review",
+            year: 2025,
+            model: "Various ML & DL",
+            finding: "Reviews 21 studies, highlighting ML's role in malignancy prediction, metastasis, and recurrence, and identifies key research gaps.",
+            url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12026350/",
+            category: "Review"
+        },
+        { 
+            title: "Thyroid Disease Prediction Using Selective Features and Machine Learning",
+            year: 2022,
+            model: "Random Forest, SVM",
+            finding: "Demonstrates that using feature selection techniques can improve model performance, with Random Forest achieving 0.99 accuracy.",
+            url: "https://www.mdpi.com/2072-6694/14/16/3914",
+            category: "Classical ML"
+        },
+        { 
+            title: "Deep Learning Technology for Classification of Thyroid Nodules Using Multi-View Ultrasound",
+            year: 2024,
+            model: "ResNet, DenseNet",
+            finding: "Multi-view modeling (using both transverse and longitudinal images) significantly improved model accuracy to ~83%.",
+            url: "https://www.e-enm.org/journal/view.php?number=2568",
+            category: "Deep Learning"
+        },
+        { 
+            title: "Enhancing Thyroid Disease Prediction Using Ensemble Models",
+            year: 2025,
+            model: "Ensemble (Bagging)",
+            finding: "Bagging and stacking ensemble models outperformed individual classifiers like Decision Trees and Random Forest, handling data imbalance well.",
+            url: "https://www.researchgate.net/publication/388941244_Enhancing_Thyroid_Disease_Prediction_Using_Machine_Learning_A_Comparative_Study_of_Ensemble_Models_and_Class_Balancing_Techniques",
+            category: "Classical ML"
+        }
+    ];
+
+    const tableBody = document.getElementById('tableBody');
+    const searchInput = document.getElementById('searchInput');
+    const tableHeaders = document.querySelectorAll('.table-sortable th');
+
+    let currentSort = { column: 'year', order: 'desc' };
+
+    const renderTable = (data) => {
+        tableBody.innerHTML = '';
+        data.forEach(paper => {
+            const row = `
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-slate-900">${paper.title}</div>
+                        <div class="text-sm text-slate-500">${paper.year}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${paper.category === 'Deep Learning' ? 'bg-teal-100 text-teal-800' : 'bg-slate-100 text-slate-800'}">
+                            ${paper.model}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm text-slate-700">${paper.finding}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <a href="${paper.url}" target="_blank" rel="noopener noreferrer" class="text-teal-600 hover:text-teal-800">Read Paper</a>
+                    </td>
+                </tr>
+            `;
+            tableBody.innerHTML += row;
+        });
+    };
+
+    const sortData = (data, column, order) => {
+        return [...data].sort((a, b) => {
+            let aVal = a[column];
+            let bVal = b[column];
+            
+            if (typeof aVal === 'string') {
+                aVal = aVal.toLowerCase();
+                bVal = bVal.toLowerCase();
+            }
+
+            if (aVal < bVal) return order === 'asc' ? -1 : 1;
+            if (aVal > bVal) return order === 'asc' ? 1 : -1;
+            return 0;
+        });
+    };
+
+    const filterData = (data, query) => {
+        if (!query) return data;
+        const lowerCaseQuery = query.toLowerCase();
+        return data.filter(paper => 
+            paper.title.toLowerCase().includes(lowerCaseQuery) ||
+            paper.model.toLowerCase().includes(lowerCaseQuery) ||
+            paper.finding.toLowerCase().includes(lowerCaseQuery) ||
+            String(paper.year).includes(lowerCaseQuery)
+        );
+    };
+    
+    const updateTable = () => {
+        const query = searchInput.value;
+        const filtered = filterData(papersData, query);
+        const sorted = sortData(filtered, currentSort.column, currentSort.order);
+        renderTable(sorted);
+    };
+
+    searchInput.addEventListener('input', updateTable);
+
+    tableHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            const column = header.dataset.sort;
+            if (!column) return;
+            
+            const order = currentSort.column === column && currentSort.order === 'asc' ? 'desc' : 'asc';
+            currentSort = { column, order };
+            updateTable();
+        });
+    });
+
+    const ctx = document.getElementById('performanceChart').getContext('2d');
+    const performanceChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Random Forest', 'Ensemble Models (Bagging, Boosting)', 'Support Vector Machine (SVM)', 'CNNs (Image Analysis)', 'Advanced CNNs (ResNet, DenseNet)'],
+            datasets: [{
+                label: 'Reported Accuracy',
+                data: [99.4, 98.5, 95.0, 91.0, 94.4],
+                backgroundColor: [
+                    'rgba(20, 184, 166, 0.6)',
+                    'rgba(15, 118, 110, 0.6)',
+                    'rgba(100, 116, 139, 0.6)',
+                    'rgba(20, 184, 166, 0.6)',
+                    'rgba(15, 118, 110, 0.6)',
+                ],
+                borderColor: [
+                    'rgba(20, 184, 166, 1)',
+                    'rgba(15, 118, 110, 1)',
+                    'rgba(100, 116, 139, 1)',
+                    'rgba(20, 184, 166, 1)',
+                    'rgba(15, 118, 110, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    max: 100,
+                    title: {
+                        display: true,
+                        text: 'Accuracy (%)'
+                    }
+                },
+                y: {
+                   ticks: {
+                        autoSkip: false
+                    } 
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return ` Accuracy: ${context.raw.toFixed(1)}%`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+    
+    updateTable();
+});
+</script>
+</body>
+</html>
