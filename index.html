@@ -6,21 +6,13 @@
     <title>Machine Learning Models for Thyroid Disease: A Literature Review</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Chosen Palette: Warm Neutrals -->
-    <!-- Application Structure Plan: A single-page dashboard design is chosen for optimal user experience. The structure includes a header for context, a main dashboard with key visualizations (Model Frequency and Performance Over Time), interactive filters, and a detailed, searchable table of research papers. This top-down approach allows users to get a quick overview from the charts and then dive deeper into specific studies using the filterable table. This is more intuitive and engaging than a linear report, encouraging exploration and comparison. -->
-    <!-- Visualization & Content Choices: 
-        - Report Info: Frequency of different ML models. Goal: Compare popularity. Viz: Bar Chart. Interaction: Hover for details, filters update chart. Justification: A bar chart is the clearest way to compare categorical counts. Library: Chart.js.
-        - Report Info: Performance metrics (accuracy) over time. Goal: Show trends. Viz: Line Chart. Interaction: Hover for details. Justification: A line chart effectively displays trends over a continuous variable (years). Library: Chart.js.
-        - Report Info: Detailed list of research papers. Goal: Organize and Inform. Presentation: Interactive HTML Table. Interaction: Filter by model type and year, search by keyword. Justification: A filterable table provides direct access to specific data points (papers) and allows users to narrow down the vast literature to their specific interests. Method: Vanilla JS.
-        - Report Info: Key takeaways from the literature. Goal: Inform. Presentation: Textual summary cards. Interaction: Static display. Justification: Provides high-level, synthesized insights that give context to the data shown in the charts and table. Method: HTML/Tailwind CSS. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             background-color: #FDFBF7;
             color: #3a3a3a;
             font-family: 'Inter', sans-serif;
         }
-        .chart-container {
+       .chart-container {
             position: relative;
             width: 100%;
             max-width: 600px;
@@ -30,7 +22,7 @@
             max-height: 400px;
         }
         @media (min-width: 768px) {
-            .chart-container {
+           .chart-container {
                 height: 350px;
             }
         }
@@ -60,7 +52,6 @@
         </header>
 
         <main>
-            <!-- Key Insights Section -->
             <section id="insights" class="mb-12">
                  <div class="text-center mb-6">
                     <h2 class="text-2xl font-semibold text-gray-700">Evolution of Techniques</h2>
@@ -69,20 +60,19 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
                         <h3 class="font-semibold text-lg text-gray-800 mb-2">Early 2010s: Foundational Models</h3>
-                        <p class="text-gray-600">Initial research heavily relied on foundational models like SVM, Naive Bayes, and basic Artificial Neural Networks (ANN) to establish the viability of ML for thyroid diagnosis on structured datasets like the UCI repository.</p>
+                        <p class="text-gray-600">Initial research heavily relied on foundational models like SVM, Naive Bayes, and basic Artificial Neural Networks (ANN) to establish the viability of ML for thyroid diagnosis on structured datasets and ultrasound images.</p>
                     </div>
                     <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                        <h3 class="font-semibold text-lg text-gray-800 mb-2">Mid-Late 2010s: Rise of Ensembles</h3>
-                        <p class="text-gray-600">The focus shifted to more robust ensemble methods. Random Forest and Gradient Boosting became dominant, consistently achieving higher accuracy by combining multiple decision trees and addressing overfitting.</p>
+                        <h3 class="font-semibold text-lg text-gray-800 mb-2">Mid-Late 2010s: Rise of Ensembles & Deep Learning</h3>
+                        <p class="text-gray-600">The focus shifted to more robust ensemble methods like Random Forest and Gradient Boosting for clinical data. Simultaneously, Deep Learning with CNNs (e.g., Inception-v3) began to revolutionize image-based diagnosis.</p>
                     </div>
                     <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                        <h3 class="font-semibold text-lg text-gray-800 mb-2">2020-Present: Deep Learning Era</h3>
-                        <p class="text-gray-600">Deep Learning, especially CNNs, revolutionized image-based diagnosis (ultrasound, scintigraphy). For tabular data, advanced techniques like stacking ensembles and explainable AI (XAI) are now at the forefront.</p>
+                        <h3 class="font-semibold text-lg text-gray-800 mb-2">2020-Present: Advanced Architectures & XAI</h3>
+                        <p class="text-gray-600">Modern research leverages advanced architectures (e.g., Vision Transformers, multi-channel CNNs) and focuses on clinical utility through generalizability testing and explainable AI (XAI) for model transparency.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Visualizations -->
             <section id="visualizations" class="mb-12 bg-white p-6 rounded-lg shadow-md border border-gray-200">
                  <div class="text-center mb-8">
                     <h2 class="text-2xl font-semibold text-gray-700">Data Visualizations</h2>
@@ -104,7 +94,6 @@
                 </div>
             </section>
 
-            <!-- Literature Table Section -->
             <section id="literature">
                 <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                     <div class="text-center mb-6">
@@ -112,7 +101,6 @@
                          <p class="text-gray-500 mt-1">Explore and filter key research papers. Click on a title to access the source.</p>
                     </div>
 
-                    <!-- Filters -->
                     <div class="flex flex-wrap gap-4 mb-6 justify-center">
                         <input type="text" id="searchInput" placeholder="Search by keyword..." class="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-c5a992 focus:border-c5a992">
                         <select id="modelFilter" class="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-c5a992 focus:border-c5a992">
@@ -126,22 +114,20 @@
                          <button id="resetFilters" class="px-4 py-2 bg-[#b0927a] text-white rounded-md hover:bg-[#a0826a] transition-colors shadow-sm">Reset</button>
                     </div>
 
-                    <!-- Table -->
                     <div class="overflow-x-auto border border-gray-200 rounded-lg">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title / Author(s)</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Primary Model/Method</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Accuracy</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Accuracy/AUC</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Year</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Improvements / Key Contribution</th>
                                 </tr>
                             </thead>
                             <tbody id="papersTable" class="bg-white divide-y divide-gray-200">
-                                <!-- JS will populate this -->
-                            </tbody>
+                                </tbody>
                         </table>
                     </div>
                 </div>
@@ -154,52 +140,7 @@
     </div>
 
     <script>
-        const papersData = [
-            // 2010-2015
-            { title: 'Diagnosis of thyroid diseaseusing artificial neural network methods', model: 'ANN', type: 'Traditional ML', accuracy: 92.5, year: 2011, contribution: 'Early application of ANNs, demonstrating their potential over linear models.', link: '#' },
-            { title: 'Application of Machine Learning in Thyroid Disease', model: 'SVM', type: 'Traditional ML', accuracy: 94.2, year: 2012, contribution: 'Showcased SVM as a robust method for binary classification of thyroid conditions.', link: '#' },
-            { title: 'A Comparative Study of Classification Algorithms for Thyroid Disease', model: 'Decision Tree, Naive Bayes', type: 'Traditional ML', accuracy: 95.8, year: 2013, contribution: 'Benchmarked early classifiers, finding Decision Trees superior on UCI dataset.', link: '#' },
-            { title: 'Feature Selection for Thyroid Disease Diagnosis using Genetic Algorithm', model: 'GA + k-NN', type: 'Traditional ML', accuracy: 96.1, year: 2014, contribution: 'Introduced evolutionary algorithms for feature selection to improve classifier performance.', link: '#' },
-            { title: 'Classifier Model Based on Machine Learning Algorithms for Thyroid Nodules', model: 'RBF-NN, SVM', type: 'Traditional ML', accuracy: 89.5, year: 2015, contribution: 'Applied multiple algorithms to differentiate nodules via sonography data.', link: '#' },
-            { title: 'An Expert System for Thyroid Disease Diagnosis using Fuzzy Logic', model: 'Fuzzy Logic', type: 'Traditional ML', accuracy: 93.0, year: 2015, contribution: 'Explored fuzzy logic to handle uncertainty in clinical data.', link: '#' },
-            
-            // 2016-2019
-            { title: 'Thyroid Nodule Classification using Geometric and Morphological Features', model: 'Random Forest', type: 'Traditional ML', accuracy: 93.8, year: 2016, contribution: 'Utilized engineered features from ultrasound images with an ensemble model.', link: '#' },
-            { title: 'A Hybrid Decision Support System for Thyroid Diagnosis', model: 'ANN & Fuzzy Logic', type: 'Traditional ML', accuracy: 99.1, year: 2017, contribution: 'Combined neural networks with fuzzy logic to create a highly accurate hybrid system.', link: '#' },
-            { title: 'Thyroid Disease Classification Using Decision Tree and SVM', model: 'Decision Tree, SVM', type: 'Traditional ML', accuracy: 99.8, year: 2018, contribution: 'Achieved near-perfect accuracy on a specific dataset split through algorithm comparison.', link: '#' },
-            { title: 'Comparative Analysis of Tree-Based Machine Learning Algorithms on Thyroid Disease', model: 'XGBoost', type: 'Traditional ML', accuracy: 99.39, year: 2019, contribution: 'Demonstrated the superiority of gradient boosting methods over standard RF/DT.', link: '#' },
-            { title: 'Classification of Thyroid Nodules in Ultrasound Images Using Direction-Independent Features', model: 'SVM', type: 'Traditional ML', accuracy: 94.6, year: 2019, contribution: 'Developed novel feature extraction techniques for ultrasound image analysis.', link: '#' },
-            { title: 'A Deep-Learning Algorithm for Thyroid Malignancy Prediction From Cytopathology Images', model: 'CNN', type: 'Deep Learning', accuracy: 97.2, year: 2019, contribution: 'Pioneered the use of deep learning directly on whole-slide cytopathology images.', link: '#' },
-
-            // 2020
-            { title: 'Thyroid Disease Prediction Using Machine Learning Approaches', model: 'Random Forest', type: 'Traditional ML', accuracy: 98.9, year: 2020, contribution: 'Employed hyperparameter tuning to optimize Random Forest performance.', link: '#' },
-            { title: 'Machine learning for the diagnosis of thyroid cancer', model: 'CNN (Inception v3)', type: 'Deep Learning', accuracy: 96.3, year: 2020, contribution: 'Applied transfer learning with a well-known CNN architecture for nodule classification.', link: '#' },
-            
-            // 2021
-            { title: 'Application of machine learning algorithms to predict the thyroid disease risk', model: 'ANN', type: 'Traditional ML', accuracy: 95.7, year: 2021, contribution: 'A comprehensive comparison of ten different ML algorithms, with ANN performing best.', link: '#' },
-            { title: 'A Study of Disease Diagnosis using Machine Learning', model: 'CatBoost', type: 'Traditional ML', accuracy: 97.5, year: 2021, contribution: 'Highlighted CatBoost as a powerful gradient boosting variant for medical data.', link: '#' },
-            
-            // 2022
-            { title: 'Machine learning on thyroid disease: a review', model: 'Random Forest, GBC', type: 'Traditional ML', accuracy: null, year: 2022, contribution: 'A review paper summarizing effective models for different data types (numeric, genomic).', link: 'https://www.imrpress.com/journal/FBL/27/3/10.31083/j.fbl2703101/htm' },
-            { title: 'Ultrasound Image Classification of Thyroid Nodules Based on Deep Learning', model: 'ResNet18', type: 'Deep Learning', accuracy: 93.75, year: 2022, contribution: 'Utilized a residual network (ResNet) to handle vanishing gradients in deep networks.', link: 'https://www.frontiersin.org/articles/10.3389/fonc.2022.905955/full' },
-            { title: 'Developing an Explainable Machine Learning-Based Thyroid Disease Prediction Model', model: 'XGBoost, SHAP', type: 'Traditional ML', accuracy: 98.59, year: 2022, contribution: 'Focused on model interpretability using SHAP to explain XGBoost predictions.', link: 'https://www.igi-global.com/article/developing-explainable-machine-learning-based/292058' },
-            
-            // 2023
-            { title: 'Diagnosis of thyroid disease using deep convolutional neural network models', model: 'DCNN', type: 'Deep Learning', accuracy: 85.00, year: 2023, contribution: 'Applied DCNNs to scintigraphy images, a different imaging modality.', link: 'https://www.frontiersin.org/journals/endocrinology/articles/10.3389/fendo.2023.1224191/full' },
-            { title: 'Development of a Machine Learning-Based Screening Method for Thyroid Nodules', model: 'SVC', type: 'Traditional ML', accuracy: 92.10, year: 2023, contribution: 'Addressed data imbalance using SMOTE to improve model fairness and performance.', link: 'https://www.ncbi.nlm.nih.gov/articles/PMC10422153/' },
-            { title: 'A Framework for Detecting Thyroid Cancer from Ultrasound and Histopathological Images', model: 'Swin Transformer, RF', type: 'Deep Learning', accuracy: 99.13, year: 2023, contribution: 'Introduced Transformer models (vision transformers) for feature extraction from images.', link: 'https://www.mdpi.com/2313-433X/9/9/173' },
-            
-            // 2024
-            { title: 'Enhanced Diagnosis of Thyroid Diseases Through Advanced Machine Learning Methodologies', model: 'Gradient Boosting', type: 'Traditional ML', accuracy: 99.76, year: 2024, contribution: 'Achieved extremely high accuracy through meticulous preprocessing and oversampling.', link: 'https://www.mdpi.com/2413-4155/7/2/66' },
-            { title: 'Automatic Classification of Nodules from 2D Ultrasound Images Using Deep Learning Networks', model: 'DenseNet', type: 'Deep Learning', accuracy: 94.00, year: 2024, contribution: 'Used DenseNet architecture to improve feature propagation and gradient flow.', link: 'https://www.mdpi.com/2313-433X/10/8/203' },
-            { title: 'An Improved Framework for Detecting Thyroid Disease Using Stacking Ensemble', model: 'Stacking Ensemble', type: 'Traditional ML', accuracy: 99.9, year: 2024, contribution: 'Leveraged stacking (combining predictions of multiple models) to boost performance.', link: 'https://core.ac.uk/download/pdf/621337931.pdf' },
-            
-            // 2025
-            { title: 'An Improved Deep Learning Models with Hybrid Architectures', model: 'CNN-RNN Hybrid', type: 'Deep Learning', accuracy: null, year: 2025, contribution: 'Proposed a hybrid model combining spatial (CNN) and temporal (RNN) feature extraction.', link: 'https://www.jneonatalsurg.com/index.php/jns/article/view/1925' },
-            { title: 'Enhancing Thyroid Disease Prediction Using Machine Learning: A Comparative Study', model: 'Bagging, Stacking', type: 'Traditional ML', accuracy: 97.50, year: 2025, contribution: 'Compared different ensemble strategies, finding stacking to be highly effective.', link: 'https://www.researchgate.net/publication/388941244_Enhancing_Thyroid_Disease_Prediction_Using_Machine_Learning_A_Comparative_Study_of_Ensemble_Models_and_Class_Balancing_Techniques' },
-            { title: 'Comparative Analysis of Thyroid Disease Prediction Models', model: 'Random Forest', type: 'Traditional ML', accuracy: 96.2, year: 2025, contribution: 'Provided an updated comparison of RF, Decision Trees, and Logistic Regression.', link: 'https://www.jait.us/articles/2025/JAIT-V16N8-1169.pdf' },
-            { title: 'Machine Learning for Thyroid Cancer Detection... A Scoping Review', model: 'Various (Review)', type: 'Deep Learning', accuracy: null, year: 2025, contribution: 'Scoping review mapping the literature on ML for malignancy prediction and recurrence.', link: 'https://www.ncbi.nlm.nih.gov/articles/PMC12026350/' }
-        ];
+        const papersData =;
 
         let modelFrequencyChart, accuracyTrendChart;
 
@@ -232,11 +173,11 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-gray-700">${paper.model}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${paper.type === 'Deep Learning' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${paper.type === 'Deep Learning'? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}">
                                 ${paper.type}
                             </span>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-gray-700">${paper.accuracy ? paper.accuracy.toFixed(2) + '%' : 'N/A'}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-gray-700">${paper.accuracy? paper.accuracy.toFixed(2) + '%' : 'N/A'}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-gray-700">${paper.year}</td>
                         <td class="px-6 py-4 text-sm text-gray-600">${paper.contribution}</td>
                     </tr>
@@ -247,7 +188,7 @@
         
         function populateYearFilter() {
             const yearFilter = document.getElementById('yearFilter');
-            const years = [...new Set(papersData.map(p => p.year))].sort((a,b) => b-a);
+            const years =.sort((a,b) => b-a);
             years.forEach(year => {
                 const option = document.createElement('option');
                 option.value = year;
@@ -262,11 +203,17 @@
             const yearFilter = document.getElementById('yearFilter').value;
 
             const filteredData = papersData.filter(paper => {
-                const matchesSearch = paper.title.toLowerCase().includes(searchInput) || 
+                const matchesSearch = paper.title.toLowerCase().includes(searchInput) |
+
+| 
                                       paper.model.toLowerCase().includes(searchInput) ||
                                       paper.contribution.toLowerCase().includes(searchInput);
-                const matchesModel = modelFilter === 'all' || paper.type === modelFilter;
-                const matchesYear = yearFilter === 'all' || paper.year == yearFilter;
+                const matchesModel = modelFilter === 'all' |
+
+| paper.type === modelFilter;
+                const matchesYear = yearFilter === 'all' |
+
+| paper.year == yearFilter;
                 return matchesSearch && matchesModel && matchesYear;
             });
 
@@ -288,10 +235,16 @@
             const modelCounts = initialData.reduce((acc, paper) => {
                 const models = paper.model.split(/, | & /);
                 models.forEach(model => {
-                    let cleanedModel = model.replace('(Review)', '').trim();
-                    if(cleanedModel === 'GBC') cleanedModel = 'Gradient Boosting';
-                    if(cleanedModel.includes('NN')) cleanedModel = 'ANN';
-                    acc[cleanedModel] = (acc[cleanedModel] || 0) + 1;
+                    let cleanedModel = model.replace('(Review)', '').trim().replace('(CNN)','').replace('(DL)','').trim();
+                    if(cleanedModel === 'GBC' |
+
+| cleanedModel === 'GBM') cleanedModel = 'Gradient Boosting';
+                    if(cleanedModel.includes('NN') |
+
+| cleanedModel.includes('Net')) cleanedModel = 'ANN/CNN';
+                    acc[cleanedModel] = (acc[cleanedModel] |
+
+| 0) + 1;
                 });
                 return acc;
             }, {});
@@ -300,13 +253,7 @@
                 type: 'bar',
                 data: {
                     labels: Object.keys(modelCounts),
-                    datasets: [{
-                        label: 'Number of Studies',
-                        data: Object.values(modelCounts),
-                        backgroundColor: 'rgba(197, 169, 146, 0.6)',
-                        borderColor: 'rgba(176, 146, 122, 1)',
-                        borderWidth: 1
-                    }]
+                    datasets:
                 },
                 options: {
                     responsive: true,
@@ -320,7 +267,9 @@
             });
 
             const accuracyByYear = initialData.filter(p => p.accuracy).reduce((acc, paper) => {
-                if (!acc[paper.year] || paper.accuracy > acc[paper.year]) {
+                if (!acc[paper.year] |
+
+| paper.accuracy > acc[paper.year]) {
                     acc[paper.year] = paper.accuracy;
                 }
                 return acc;
@@ -333,14 +282,7 @@
                 type: 'line',
                 data: {
                     labels: sortedYears,
-                    datasets: [{
-                        label: 'Max Accuracy Reported',
-                        data: accuracyData,
-                        fill: true,
-                        backgroundColor: 'rgba(176, 146, 122, 0.2)',
-                        borderColor: 'rgba(176, 146, 122, 1)',
-                        tension: 0.1
-                    }]
+                    datasets:
                 },
                 options: {
                     responsive: true,
@@ -348,7 +290,7 @@
                     scales: {
                         y: {
                             beginAtZero: false,
-                            min: 80,
+                            min: 65,
                             ticks: {
                                 callback: function(value) { return value + '%' }
                             }
@@ -363,20 +305,28 @@
              const modelCounts = data.reduce((acc, paper) => {
                 const models = paper.model.split(/, | & /);
                 models.forEach(model => {
-                    let cleanedModel = model.replace('(Review)', '').trim();
-                    if(cleanedModel === 'GBC') cleanedModel = 'Gradient Boosting';
-                    if(cleanedModel.includes('NN')) cleanedModel = 'ANN';
-                    acc[cleanedModel] = (acc[cleanedModel] || 0) + 1;
+                    let cleanedModel = model.replace('(Review)', '').trim().replace('(CNN)','').replace('(DL)','').trim();
+                    if(cleanedModel === 'GBC' |
+
+| cleanedModel === 'GBM') cleanedModel = 'Gradient Boosting';
+                    if(cleanedModel.includes('NN') |
+
+| cleanedModel.includes('Net')) cleanedModel = 'ANN/CNN';
+                    acc[cleanedModel] = (acc[cleanedModel] |
+
+| 0) + 1;
                 });
                 return acc;
             }, {});
             
             modelFrequencyChart.data.labels = Object.keys(modelCounts);
-            modelFrequencyChart.data.datasets[0].data = Object.values(modelCounts);
+            modelFrequencyChart.data.datasets.data = Object.values(modelCounts);
             modelFrequencyChart.update();
             
             const accuracyByYear = data.filter(p => p.accuracy).reduce((acc, paper) => {
-                if (!acc[paper.year] || paper.accuracy > acc[paper.year]) {
+                if (!acc[paper.year] |
+
+| paper.accuracy > acc[paper.year]) {
                     acc[paper.year] = paper.accuracy;
                 }
                 return acc;
@@ -386,7 +336,7 @@
             const accuracyData = sortedYears.map(year => accuracyByYear[year]);
 
             accuracyTrendChart.data.labels = sortedYears;
-            accuracyTrendChart.data.datasets[0].data = accuracyData;
+            accuracyTrendChart.data.datasets.data = accuracyData;
             accuracyTrendChart.update();
         }
 
